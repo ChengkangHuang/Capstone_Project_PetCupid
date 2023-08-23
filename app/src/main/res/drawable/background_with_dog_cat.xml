@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <item android:top="550dp"
+        android:bottom="20dp"
+        android:start="10dp"
+        android:end="10dp">
+        <bitmap
+            android:src="@drawable/pets_dog_cat_no_bg_crop"
+            android:gravity="fill_horizontal|clip_vertical|bottom|center_vertical" />
+    </item>
+</layer-list>

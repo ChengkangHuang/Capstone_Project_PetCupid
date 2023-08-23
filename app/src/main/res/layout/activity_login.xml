@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="loginViewModel"
+            type="ca.mohawkcollege.petcupid.login.LoginViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/loginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_with_dog_cat"
+        android:orientation="vertical"
+        android:paddingTop="45dp"
+        android:paddingStart="45dp"
+        android:paddingEnd="45dp"
+        android:paddingBottom="15dp"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/loginTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#343434"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/continueTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginTextView"
+            android:text="Please sign in to continue"
+            android:textColor="#B1B1B1"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/continueTextView"
+            android:layout_marginTop="40dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/orange"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="text|textEmailAddress"
+                android:text="@{loginViewModel.email}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailTextInputLayout"
+            android:layout_marginTop="25dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/orange"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="text|textPassword"
+                android:text="@{loginViewModel.password}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/passwordTextInputLayout"
+            android:layout_alignEnd="@id/passwordTextInputLayout"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="#F59B46"
+            android:onClick="@{() -> loginViewModel.onLoginButtonClick()}"
+            android:text="LOGIN"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/jump2Signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Don't have an account? Sign Up"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>
