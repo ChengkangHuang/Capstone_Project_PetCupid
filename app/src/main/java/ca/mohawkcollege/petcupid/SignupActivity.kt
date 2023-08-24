@@ -24,6 +24,9 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private val signupViewModel: SignupViewModel by viewModels()
 
+    /**
+     * Setup the result codes
+     */
     companion object {
         const val RESULT_CODE_SUCCESS = 1
         const val RESULT_CODE_FAILURE = -1
