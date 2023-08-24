@@ -3,20 +3,26 @@ package ca.mohawkcollege.petcupid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import ca.mohawkcollege.petcupid.databinding.ActivityLoginBinding
 import ca.mohawkcollege.petcupid.login.LoginResult
 import ca.mohawkcollege.petcupid.login.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseUser
+import java.lang.Error
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,14 +41,10 @@ class LoginActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.loginViewModel = loginViewModel
 
-//        setupLoginResultObserver()
-        setupTextInputHandler()
-        setupSwitchToSignup()
-    }
-
-    override fun onStart() {
-        super.onStart()
         setupLoginResultObserver()
+        setupTextInputHandler()
+        setupLoginButtonHandler()
+        setupSwitchToSignup()
     }
 
     private fun setupLoginResultObserver() {
@@ -65,12 +67,14 @@ class LoginActivity : AppCompatActivity() {
     private val mySignupActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == 1) {
+        if (result.resultCode == SignupActivity.RESULT_CODE_SUCCESS) {
             val user = result.data?.getParcelableExtra<FirebaseUser>("user")
-            Log.d(TAG, "onActivityResult: User -> $user login")
-        } else if (result.resultCode == -1) {
-            Log.d(TAG, "onActivityResult: Login failed")
-            Snackbar.make(binding.root, "Login failed", Snackbar.LENGTH_SHORT).show()
+            Log.d(TAG, "onActivityResult: User -> $user sign up successfully")
+            Log.d(TAG, "onActivityResult: Email -> ${user?.email} | UID -> ${user?.uid}")
+            binding.emailTextInputEditText.setText(user?.email)
+        } else if (result.resultCode == SignupActivity.RESULT_CODE_FAILURE) {
+            Log.d(TAG, "onActivityResult: Sign up failed")
+            Snackbar.make(binding.root, "Sign up failed", Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -82,45 +86,56 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupTextInputHandler() {
-        binding.emailTextInputEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                loginViewModel.onEmailTextChanged(s.toString())
+        binding.emailTextInputEditText.doOnTextChanged { text, _, _, _ ->
+            binding.emailTextInputLayout.error = ""
+            loginViewModel.onEmailTextChanged(text.toString())
+            val isMatch = text.toString().matches("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex())
+            if (!isMatch) binding.emailTextInputLayout.error = "Invalid email address"
+        }
+
+        binding.passwordTextInputEditText.doOnTextChanged { text, _, _, _ ->
+            binding.passwordTextInputLayout.error = ""
+            loginViewModel.onPasswordTextChanged(text.toString())
+            if (text.toString().length < 8)
+                binding.passwordTextInputLayout.helperText = "Password must be at least 6 characters"
+        }
+    }
+
+    private val vibrator: Vibrator
+        get() = getSystemService(VIBRATOR_SERVICE) as Vibrator
+
+    private fun callVibrator() {
+        val vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+        vibrator.vibrate(vibrationEffect)
+    }
+
+    private fun TextInputLayout.showErrorAndShake(errorMessage: String) {
+        error = errorMessage
+        isErrorEnabled = true
+        startAnimation(AnimationUtils.loadAnimation(this.context, R.anim.shake))
+    }
+
+    private fun setupLoginButtonHandler() {
+        binding.loginBtn.setOnClickListener {
+            var hasErrors = false
+            val email = loginViewModel.email.value
+            val password = loginViewModel.password.value
+
+            if (email.isNullOrEmpty()) {
+                binding.emailTextInputLayout.showErrorAndShake("Email can not be empty")
+                hasErrors = true
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
+            if (password.isNullOrEmpty()) {
+                binding.passwordTextInputLayout.showErrorAndShake("Password can not be empty")
+                hasErrors = true
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val input: String = s.toString()
-                val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-                if (!input.matches(emailPattern.toRegex())) {
-                    binding.emailTextInputLayout.helperText = "Invalid email address"
-                    binding.emailTextInputLayout.setHelperTextColor(resources.getColorStateList(R.color.red, null))
-                } else {
-                    binding.emailTextInputLayout.helperText = ""
-                }
+            if (!hasErrors) {
+                loginViewModel.onLoginButtonClick()
+            } else {
+                callVibrator()
             }
-        })
-
-        binding.passwordTextInputEditText.addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                loginViewModel.onPasswordTextChanged(s.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val input: String = s.toString()
-                if (input.length < 8) {
-                    binding.passwordTextInputLayout.helperText = "Password must be at least 8 characters"
-                    binding.passwordTextInputLayout.setHelperTextColor(resources.getColorStateList(R.color.red, null))
-                } else {
-                    binding.passwordTextInputLayout.helperText = ""
-                }
-            }
-        })
+        }
     }
 }

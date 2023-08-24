@@ -10,6 +10,12 @@ class SignupRepository {
 
     private val TAG = "====SignupRepository===="
 
+    /**
+     * Signup a user with the given email and password.
+     * @param email The email of the user.
+     * @param password The password of the user.
+     * @param callback The callback function to be called when the signup is complete.
+     */
     fun signup(email: String, password: String, callback: (FirebaseUser?, Exception?) -> Unit) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -22,6 +28,13 @@ class SignupRepository {
             }
     }
 
+    /**
+     * Save the user to the database.
+     * @param uid The uid of the user.
+     * @param userName The username of the user.
+     * @param phoneNumber The phone number of the user.
+     * @param email The email of the user.
+     */
     fun saveToDatabase(uid: String, userName: String, phoneNumber: String, email: String) {
         val user = hashMapOf(
             "uid" to uid,

@@ -37,10 +37,6 @@ class SignupViewModel : ViewModel() {
         this.confirmPassword.value = confirmPassword
     }
 
-    fun validInput(text: String): Boolean {
-        return text.isEmpty()
-    }
-
     fun onSignupButtonClick() {
         val userName = userName.value!!
         val email = email.value!!

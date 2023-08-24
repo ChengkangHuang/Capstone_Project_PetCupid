@@ -94,7 +94,6 @@
             android:layout_alignEnd="@id/passwordTextInputLayout"
             android:layout_marginTop="25dp"
             android:backgroundTint="#F59B46"
-            android:onClick="@{() -> loginViewModel.onLoginButtonClick()}"
             android:text="LOGIN"
             android:textSize="20sp"
             android:textStyle="bold" />
