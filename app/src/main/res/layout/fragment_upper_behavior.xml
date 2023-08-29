@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
+    tools:context=".UpperBehaviorFragment">
+
+    <ImageButton
+        android:id="@+id/profileImgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#02FFFFFF"
+        android:contentDescription="User Profile"
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:src="@drawable/account_circle_icon" />
+
+    <ImageButton
+        android:id="@+id/camImgBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:contentDescription="Camera"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
+        android:src="@drawable/camera_icon" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_gravity="top|center_vertical"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:src="@drawable/main_page_top" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="cursive"
+        android:text="Chats"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+</FrameLayout>
