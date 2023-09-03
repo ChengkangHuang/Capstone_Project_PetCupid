@@ -5,7 +5,8 @@
     <color name="red">#DF3030</color>
     <color name="green">#33E633</color>
     <color name="orange">#F59B46</color>
-    <color name="chat_bg">#F3EAE1</color>
+    <color name="chat_list_bg">#F3EAE1</color>
+    <color name="chat_bg">#EDD8C3</color>
     <color name="chat_lst_msg_time">#919090</color>
     <color name="chat_list_under_line">#FAD7B8</color>
 </resources>
