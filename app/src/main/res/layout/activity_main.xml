@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange"
+    android:orientation="vertical">
 
-    <data>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/upperBehaviorFragmentContainerView"
+        android:name="ca.mohawkcollege.petcupid.UpperBehaviorFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_upper_behavior" />
 
-    </data>
-
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/chatListFragmentContainerView"
+        android:name="ca.mohawkcollege.petcupid.ChatListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/orange"
-        android:orientation="vertical">
+        tools:layout="@layout/fragment_chat_list" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/upperBehaviorFragmentContainerView"
-            android:name="ca.mohawkcollege.petcupid.UpperBehaviorFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_upper_behavior" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/chatListFragmentContainerView"
-            android:name="ca.mohawkcollege.petcupid.ChatListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_chat_list" />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>
