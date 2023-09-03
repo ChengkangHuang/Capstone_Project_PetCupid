@@ -12,6 +12,8 @@ import ca.mohawkcollege.petcupid.chatlist.ChatListAdapter
 import ca.mohawkcollege.petcupid.chatlist.ChatListViewModel
 import ca.mohawkcollege.petcupid.databinding.FragmentChatListBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 /**
  * An ChatListFragment subclass.
@@ -23,7 +25,7 @@ class ChatListFragment : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private var _binding: FragmentChatListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: ChatListViewModel
+    private lateinit var chatListViewModel: ChatListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +39,8 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
-        viewModel = ViewModelProvider(this)[ChatListViewModel::class.java]
+        Firebase.database.setPersistenceEnabled(true)
+        chatListViewModel = ViewModelProvider(this)[ChatListViewModel::class.java]
         val adapter = context?.let {
             ChatListAdapter(it, mutableListOf())
         }
@@ -45,20 +48,17 @@ class ChatListFragment : Fragment() {
         binding.chatListView.setOnItemClickListener { _, _, position, _ ->
             val chatListItem = adapter?.getItem(position)
             Log.d(TAG, "onViewCreated -> onChatListItemClick: $chatListItem")
-            val chatUid = chatListItem?.let { getChatUid(mAuth.uid!!, it.uid) }
-            Log.d(TAG, "onViewCreated -> Link to chat: $chatUid")
             Intent(context, ChatActivity::class.java).apply {
-                putExtra("chatUid", chatUid)
-                putExtra("receiver", chatListItem?.name)
+                putExtra("chatTo", chatListItem)
                 startActivity(this)
             }
         }
 
-        viewModel.chatListItems.observe(viewLifecycleOwner) { chatListItem ->
+        chatListViewModel.chatListItems.observe(viewLifecycleOwner) { chatListItem ->
             adapter?.clear()
             adapter?.addAll(chatListItem)
             adapter?.notifyDataSetChanged()
-            Log.d(TAG, "onViewCreated -> chatListItem: $chatListItem")
+            Log.d(TAG, "onChatListViewCreated -> chatListItem: $chatListItem")
         }
     }
 
@@ -67,7 +67,5 @@ class ChatListFragment : Fragment() {
         _binding = null // Avoid memory leak
     }
 
-    private fun getChatUid(thisUid: String, thatUid: String): String {
-        return if (thisUid > thatUid) thisUid + thatUid else thatUid + thisUid
-    }
+
 }
