@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chat_bg"
+    android:orientation="vertical"
+    tools:context=".ChatActivity">
+
+    <RelativeLayout
+        android:id="@+id/ContentRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/chat_bg">
+
+        <ImageButton
+            android:id="@+id/back2MainBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/arrow_left_move_icon"
+            android:contentDescription="Back to Main Page"
+            android:scaleX="0.75"
+            android:scaleY="0.75" />
+
+        <TextView
+            android:id="@+id/receiverTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="cursive"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/orange"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/msgRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/receiverTextView"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="80dp"
+            android:padding="8dp" />
+
+    </RelativeLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/bottomSheetInputFragmentContainerView"
+        android:name="ca.mohawkcollege.petcupid.BottomSheetInputFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_bottom_sheet_input"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="85dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
