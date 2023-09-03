@@ -7,15 +7,14 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import ca.mohawkcollege.petcupid.databinding.FragmentUpperBehaviorBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -43,6 +42,7 @@ class UpperBehaviorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
         initScreenOnClickHandler()
     }
 
@@ -122,19 +122,5 @@ class UpperBehaviorFragment : Fragment() {
             if (isPicture) myPictureActivityResultLauncher.launch(it)
             else myVideoActivityResultLauncher.launch(it)
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment UpperBehaviorFragment.
-         */
-        @JvmStatic
-        fun newInstance() =
-            UpperBehaviorFragment().apply {
-                arguments = Bundle().apply {}
-            }
     }
 }
