@@ -66,6 +66,4 @@ class ChatListFragment : Fragment() {
         super.onDestroyView()
         _binding = null // Avoid memory leak
     }
-
-
 }

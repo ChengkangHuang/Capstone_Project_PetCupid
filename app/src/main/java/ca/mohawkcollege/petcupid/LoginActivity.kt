@@ -1,19 +1,17 @@
 package ca.mohawkcollege.petcupid
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.text.Editable
 import android.text.SpannableString
-import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import ca.mohawkcollege.petcupid.databinding.ActivityLoginBinding
@@ -22,7 +20,6 @@ import ca.mohawkcollege.petcupid.login.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseUser
-import java.lang.Error
 
 class LoginActivity : AppCompatActivity() {
 
@@ -66,6 +63,10 @@ class LoginActivity : AppCompatActivity() {
                 is LoginResult.Error -> {
                     Log.d(TAG, "setupLoginResultObserver: ${loginResult.exception}")
                     setResult(RESULT_CODE_FAILURE, Intent().putExtra("exception", loginResult.exception))
+                    Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Log.d(TAG, "setupLoginResultObserver: Login result is null")
                     Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
                 }
             }

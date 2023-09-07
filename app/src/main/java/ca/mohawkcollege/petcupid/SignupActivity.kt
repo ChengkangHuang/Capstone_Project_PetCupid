@@ -62,6 +62,10 @@ class SignupActivity : AppCompatActivity() {
                     setResult(LoginActivity.RESULT_CODE_FAILURE, Intent().putExtra("exception", signupResult.exception))
                     Toast.makeText(this, "Sign up failed: ${signupResult.exception}", Toast.LENGTH_SHORT).show()
                 }
+                else -> {
+                    Log.d(TAG, "setupSignupResultObserver: $signupResult")
+                    Toast.makeText(this, "Sign up failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
