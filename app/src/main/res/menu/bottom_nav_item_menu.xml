@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chatListFragment"
+        android:icon="@drawable/_835089_bubble_chat_chat_bubble_communication_feedback_icon"
+        android:title="Chat" />
+
+    <item
+        android:id="@+id/searchContactFragment"
+        android:icon="@drawable/_1121260_fi_rr_cloud_question_icon"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/_296652_animal_dog_inu_japan_japanese_icon"
+        android:title="Profile" />
+</menu>
