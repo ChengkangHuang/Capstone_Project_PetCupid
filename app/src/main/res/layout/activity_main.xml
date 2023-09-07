@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,10 +15,27 @@
         tools:layout="@layout/fragment_upper_behavior" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/chatListFragmentContainerView"
-        android:name="ca.mohawkcollege.petcupid.ChatListFragment"
+        android:id="@+id/nav_host_fragment_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_chat_list" />
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="630dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:navGraph="@navigation/nav_graph" />
 
-</LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/round_corners_bottom_nav"
+        app:elevation="5dp"
+        android:outlineAmbientShadowColor="#B309101D"
+        android:outlineSpotShadowColor="@color/black"
+        app:menu="@menu/bottom_nav_item_menu" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

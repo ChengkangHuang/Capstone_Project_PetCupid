@@ -23,6 +23,7 @@ class ContactRepository {
         query.whereEqualTo(field, value)
             .get()
             .addOnSuccessListener { result ->
+                resultCollection.clear()
                 for (document in result) {
                     Log.d(TAG, "getData: ${document.id} => ${document.data}")
                     val data = document.toObject(SearchContactItem::class.java)

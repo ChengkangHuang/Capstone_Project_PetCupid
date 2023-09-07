@@ -12,8 +12,6 @@ import ca.mohawkcollege.petcupid.chatlist.ChatListAdapter
 import ca.mohawkcollege.petcupid.chatlist.ChatListViewModel
 import ca.mohawkcollege.petcupid.databinding.FragmentChatListBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 /**
  * An ChatListFragment subclass.
@@ -39,7 +37,6 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
-        Firebase.database.setPersistenceEnabled(true)
         chatListViewModel = ViewModelProvider(this)[ChatListViewModel::class.java]
         val adapter = context?.let {
             ChatListAdapter(it, mutableListOf())

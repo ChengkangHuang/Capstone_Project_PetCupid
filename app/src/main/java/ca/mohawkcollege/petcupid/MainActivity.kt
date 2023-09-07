@@ -1,23 +1,18 @@
 package ca.mohawkcollege.petcupid
 
-import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import ca.mohawkcollege.petcupid.databinding.ActivityMainBinding
-import ca.mohawkcollege.petcupid.login.LoginResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import java.text.SimpleDateFormat
-import java.util.Date
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,13 +23,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
+        Firebase.database.setPersistenceEnabled(true)
     }
 
     override fun onStart() {
         super.onStart()
         initFirebaseAuth()
+        setupFragmentNavHandler()
     }
 
     private fun initFirebaseAuth() {
@@ -61,5 +59,11 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "onActivityResult: Login failed")
             Snackbar.make(binding.root, "Login failed", Snackbar.LENGTH_SHORT).show()
         }
+    }
+
+    private fun setupFragmentNavHandler() {
+        val nav = binding.bottomNavigationView
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
+        NavigationUI.setupWithNavController(nav, navController)
     }
 }
