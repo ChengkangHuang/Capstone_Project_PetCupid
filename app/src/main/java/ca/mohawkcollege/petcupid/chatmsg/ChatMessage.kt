@@ -5,12 +5,13 @@ import java.io.Serializable
 
 data class ChatMessage(
     val messageId: String,
+    val messageType: MessageType,
     val senderUid: String,
     val receiverUid: String,
     val message: String,
     val timestamp: Long
 ) : Serializable {
-    constructor() : this("", "", "", "", 0)
+    constructor() : this("", MessageType.TEXT, "", "", "", 0)
 
     @SuppressLint("SimpleDateFormat")
     fun timestampToString(): String {
@@ -19,4 +20,8 @@ data class ChatMessage(
         dateFormat.timeZone = timeZone
         return dateFormat.format(this.timestamp)
     }
+}
+
+enum class MessageType {
+    TEXT, IMAGE, VIDEO, AUDIO
 }
