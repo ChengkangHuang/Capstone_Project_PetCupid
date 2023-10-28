@@ -1,5 +1,7 @@
 package ca.mohawkcollege.petcupid
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,16 +14,14 @@ import ca.mohawkcollege.petcupid.chatmsg.ChatViewModel
 import ca.mohawkcollege.petcupid.databinding.FragmentBottomSheetInputBinding
 import ca.mohawkcollege.petcupid.tools.ContentUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
+import java.util.Calendar
 
 class BottomSheetInputFragment : BottomSheetDialogFragment() {
 
     private val TAG = "====BottomSheetInputFragment===="
     private var _binding: FragmentBottomSheetInputBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var _viewModel: ChatViewModel
     private lateinit var viewModel: ChatViewModel
-//    private val viewModel by lazy { _viewModel }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +40,16 @@ class BottomSheetInputFragment : BottomSheetDialogFragment() {
 
         setupSendTextMessageHandler(viewModel)
         setupSendImageMessageHandler()
+        setupAppointmentsHandler()
     }
 
+    /**
+     * Setup the handler for sending text message
+     */
     private fun setupSendTextMessageHandler(vm: ChatViewModel) {
         binding.msgSendBtn.setOnClickListener {
             val msg = binding.editTextTextMultiLine.text.toString()
-            vm.sendMsg(msg)
+            vm.sendTextMsg(msg)
             binding.editTextTextMultiLine.text.clear()
         }
     }
@@ -58,6 +62,10 @@ class BottomSheetInputFragment : BottomSheetDialogFragment() {
         TODO()
     }
 
+    /**
+     * Setup the handler for sending media message
+     * Include image and video
+     */
     private fun setupSendImageMessageHandler() {
         binding.galleryBtn.setOnClickListener {
             openGalleryActivityResultLauncher.launch(
@@ -66,6 +74,10 @@ class BottomSheetInputFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * Register an activity result launcher for gallery activity
+     * Upload the selected media to Firebase Storage
+     */
     private val openGalleryActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.PickMultipleVisualMedia(2)
     ) { uris ->
@@ -84,7 +96,24 @@ class BottomSheetInputFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * Setup the handler for setting appointments
+     */
     private fun setupAppointmentsHandler() {
-        TODO()
+        binding.calendarBtn.setOnClickListener {
+            val c = Calendar.getInstance()
+            DatePickerDialog(requireContext(), { _, year, month, dayOfMonth ->
+                Log.d(TAG, "DatePickerDialog: year: $year, month: $month, dayOfMonth: $dayOfMonth")
+                TimePickerDialog(requireContext(), { _, hourOfDay, minute ->
+                    Log.d(TAG, "TimePickerDialog: hourOfDay: $hourOfDay, minute: $minute")
+                    viewModel.setAppointment(
+                        year.toLong(),
+                        month.toLong(),
+                        dayOfMonth.toLong(),
+                        hourOfDay.toLong(),
+                        minute.toLong())
+                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show()
+            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+        }
     }
 }

@@ -1,89 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
         <variable
-            name="message_send"
-            type="ca.mohawkcollege.petcupid.chatmsg.ChatMessage" />
+            name="isMsgSender"
+            type="Boolean" />
+
         <variable
-            name="message_receive"
+            name="layoutVisibility"
+            type="Boolean" />
+
+        <variable
+            name="messageData"
             type="ca.mohawkcollege.petcupid.chatmsg.ChatMessage" />
+
+        <variable
+            name="imgMessage"
+            type="String" />
+
+        <variable
+            name="appointmentMessage"
+            type="ca.mohawkcollege.petcupid.chatmsg.Appointment" />
     </data>
 
     <RelativeLayout
-        android:id="@+id/message_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="5dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/message_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginVertical="5dp">
 
-            <RelativeLayout
-                android:id="@+id/userLayout"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/img_avatar_user"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@mipmap/user_avatar" />
-
-                <TextView
-                    android:id="@+id/txv_msg_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@id/img_avatar_user"
-                    android:background="@mipmap/my_bubble_user_4"
-                    android:gravity="center"
-                    android:paddingStart="15dp"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="25dp"
-                    android:paddingBottom="10dp"
-                    android:text="@{message_send.message}"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/img_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@id/img_avatar_user"
-                    android:background="@mipmap/my_bubble_user_4"
-                    android:gravity="center"
-                    android:paddingStart="15dp"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="25dp"
-                    android:paddingBottom="10dp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/txv_time_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/txv_msg_user"
-                    android:layout_marginEnd="6dp"
-                    android:layout_toStartOf="@id/txv_msg_user"
-                    android:text="@{message_send.timestampToString()}"
-                    android:textColor="@color/chat_lst_msg_time" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/sysLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:id="@+id/titleLayout"
+                    android:id="@+id/userLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="@{layoutVisibility ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:id="@+id/img_avatar_user"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@mipmap/user_avatar" />
+
+                    <LinearLayout
+                        android:id="@+id/msg_content_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/img_avatar_user"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txv_msg_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:background="@mipmap/my_bubble_user_4"
+                            android:gravity="center"
+                            android:paddingStart="15dp"
+                            android:paddingTop="20dp"
+                            android:paddingEnd="25dp"
+                            android:paddingBottom="10dp"
+                            android:text="@{messageData.message.content.toString()}"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            tools:text="@tools:sample/cities" />
+
+                        <ImageView
+                            android:id="@+id/img_user"
+                            android:layout_width="145dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="@mipmap/my_bubble_user_4"
+                            android:gravity="center|center_horizontal|center_vertical"
+                            android:paddingStart="10dp"
+                            android:paddingTop="20dp"
+                            android:paddingEnd="20dp"
+                            android:paddingBottom="10dp"
+                            app:imageLoader="@{imgMessage}" />
+
+                        <LinearLayout
+                            android:id="@+id/date_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:background="@mipmap/my_bubble_user_4"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="cursive"
+                                android:text="Meow &amp; Woof" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:gravity="center"
+                                android:paddingStart="15dp"
+                                android:paddingTop="20dp"
+                                android:paddingBottom="10dp"
+                                android:text='@{String.valueOf(appointmentMessage.year) + " - " + String.valueOf(appointmentMessage.month) + " - " + String.valueOf(appointmentMessage.day) + "\n" + String.valueOf(appointmentMessage.hour) + " : " + String.valueOf(appointmentMessage.minute)}'
+                                android:textColor="@color/apo_time_text"
+                                android:textSize="24sp"
+                                tools:text="@tools:sample/date/mmddyy" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@{appointmentMessage.appointmentConfirmation == 0 &amp;&amp; isMsgSender ? @color/apo_time_selected : @color/apo_time_text}"
+                                android:enabled="@{appointmentMessage.appointmentConfirmation == 0 &amp;&amp; isMsgSender ? false : true}"
+                                android:gravity="center"
+                                android:text="Confirm"
+                                app:onAppointmentConfirm="@{messageData}" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txv_time_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/msg_content_user"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toStartOf="@id/msg_content_user"
+                        android:gravity="center"
+                        android:text="@{messageData.timestampToString()}"
+                        android:textColor="@color/chat_lst_msg_time"
+                        tools:text="@tools:sample/date/hhmm" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/sysLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{layoutVisibility ? View.GONE : View.VISIBLE}">
 
                     <ImageView
                         android:id="@+id/img_avatar_other"
@@ -91,60 +160,109 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/sys_avatar" />
 
-                    <TextView
-                        android:id="@+id/txv_msg_other"
+                    <LinearLayout
+                        android:id="@+id/msg_content_other"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:layout_toEndOf="@id/img_avatar_other"
-                        android:background="@mipmap/my_bubble_system_4"
-                        android:gravity="center"
-                        android:paddingStart="25dp"
-                        android:paddingTop="20dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="10dp"
-                        android:text="@{message_receive.message}"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="16sp" />
+                        android:gravity="left"
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/img_other"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_toEndOf="@id/img_avatar_other"
-                        android:background="@mipmap/my_bubble_system_4"
-                        android:gravity="center"
-                        android:paddingStart="25dp"
-                        android:paddingTop="20dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/txv_msg_other"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:background="@mipmap/my_bubble_system_4"
+                            android:gravity="center"
+                            android:paddingStart="25dp"
+                            android:paddingTop="20dp"
+                            android:paddingEnd="15dp"
+                            android:paddingBottom="10dp"
+                            android:text="@{messageData.message.content.toString()}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="16sp"
+                            tools:text="@tools:sample/cities" />
+
+                        <ImageView
+                            android:id="@+id/img_other"
+                            android:layout_width="125dp"
+                            android:layout_height="190dp"
+                            android:layout_marginStart="6dp"
+                            android:background="@mipmap/my_bubble_system_4"
+                            android:gravity="center"
+                            android:paddingStart="25dp"
+                            android:paddingTop="20dp"
+                            android:paddingEnd="15dp"
+                            android:paddingBottom="10dp"
+                            app:imageLoader="@{imgMessage}" />
+
+                        <LinearLayout
+                            android:id="@+id/date_other"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:background="@mipmap/my_bubble_system_4"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="cursive"
+                                android:text="Meow &amp; Woof" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="6dp"
+                                android:gravity="center"
+                                android:paddingStart="15dp"
+                                android:paddingTop="20dp"
+                                android:paddingBottom="10dp"
+                                android:text='@{String.valueOf(appointmentMessage.year) + " - " + String.valueOf(appointmentMessage.month) + " - " + String.valueOf(appointmentMessage.day) + "\n" + String.valueOf(appointmentMessage.hour) + " : " + String.valueOf(appointmentMessage.minute)}'
+                                android:textColor="@color/apo_time_text"
+                                android:textSize="24sp"
+                                tools:text="@tools:sample/date/mmddyy" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@{appointmentMessage.appointmentConfirmation != 1 || isMsgSender ? @color/apo_time_text : @color/apo_time_selected}"
+                                android:enabled="@{appointmentMessage.appointmentConfirmation != 1 || isMsgSender ? true : false}"
+                                android:gravity="center"
+                                android:text="Confirm"
+                                app:onAppointmentConfirm="@{messageData}" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/txv_msg_other"
+                        android:layout_alignBottom="@id/msg_content_other"
                         android:layout_marginStart="6dp"
-                        android:layout_toEndOf="@id/txv_msg_other"
+                        android:layout_toEndOf="@id/msg_content_other"
+                        android:gravity="left"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/txv_time_other"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:gravity="right"
-                            android:text="@{message_receive.timestampToString()}"
-                            android:textColor="@color/chat_lst_msg_time" />
+                            android:text="@{messageData.timestampToString()}"
+                            android:textColor="@color/chat_lst_msg_time"
+                            tools:text="@tools:sample/date/hhmm" />
 
                     </LinearLayout>
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
+
 </layout>

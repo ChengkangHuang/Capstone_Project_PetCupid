@@ -9,7 +9,9 @@
     android:background="@drawable/shape_10dp_corners"
     android:orientation="vertical"
     android:padding="5dp"
-    android:showDividers="middle">
+    android:showDividers="middle"
+    tools:layout_editor_absoluteX="-5dp"
+    tools:layout_editor_absoluteY="-30dp">
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/drag_handle"
@@ -71,13 +73,13 @@
             android:layout_marginBottom="16dp"
             android:background="@mipmap/gallery"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/calendatBtn"
+            app:layout_constraintEnd_toStartOf="@+id/calendarBtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/calendatBtn"
+            android:id="@+id/calendarBtn"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="@mipmap/calendar"
