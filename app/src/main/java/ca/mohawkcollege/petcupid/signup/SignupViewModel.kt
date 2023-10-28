@@ -45,7 +45,8 @@ class SignupViewModel : ViewModel() {
         signupRepository.signup(email, password) { user, exception ->
             if (user != null) {
                 _signupResult.value = SignupResult.Success(user)
-                signupRepository.saveToDatabase(user.uid, userName, phoneNumber, email)
+                val token = signupRepository.getToken()
+                signupRepository.saveToDatabase(user.uid, userName, phoneNumber, email, token)
                 Log.d(TAG, "onSignupButtonClick: current user id -> ${user.uid}")
             } else {
                 _signupResult.value = SignupResult.Error(exception!!)

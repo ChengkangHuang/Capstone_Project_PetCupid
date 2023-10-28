@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class SignupRepository {
 
@@ -29,18 +30,40 @@ class SignupRepository {
     }
 
     /**
+     * Get the token of the current user.
+     * @return The token of the current user.
+     */
+    fun getToken(): String {
+        var token = ""
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                } else {
+                    token = task.result
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Fetching FCM registration token failed", exception)
+            }
+        return token
+    }
+
+    /**
      * Save the user to the database.
      * @param uid The uid of the user.
      * @param userName The username of the user.
      * @param phoneNumber The phone number of the user.
      * @param email The email of the user.
+     * @param token The token of the user.
      */
-    fun saveToDatabase(uid: String, userName: String, phoneNumber: String, email: String) {
+    fun saveToDatabase(uid: String, userName: String, phoneNumber: String, email: String, token: String) {
         val user = hashMapOf(
             "uid" to uid,
             "username" to userName,
             "phone" to phoneNumber,
-            "email" to email
+            "email" to email,
+            "token" to token
         )
         val db = Firebase.firestore
         db.collection("users")
