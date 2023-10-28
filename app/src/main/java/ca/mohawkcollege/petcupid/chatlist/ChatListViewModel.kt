@@ -1,7 +1,5 @@
 package ca.mohawkcollege.petcupid.chatlist
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,13 +35,5 @@ class ChatListViewModel : ViewModel() {
             ChatListItem("", R.drawable.zeus, "Zeus", "How are you?", "12:03 AM"),
         )
         _chatListItems.value = items
-    }
-
-    companion object {
-        @JvmStatic
-        @BindingAdapter("imageResource")
-        fun setImageResource(imageView: ImageView, resource: Int) {
-            imageView.setImageResource(resource)
-        }
     }
 }

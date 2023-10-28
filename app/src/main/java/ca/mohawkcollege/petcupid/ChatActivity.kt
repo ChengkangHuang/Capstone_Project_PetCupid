@@ -10,6 +10,7 @@ import ca.mohawkcollege.petcupid.chatmsg.ChatMessage
 import ca.mohawkcollege.petcupid.chatmsg.ChatMessageViewHolder
 import ca.mohawkcollege.petcupid.chatmsg.ChatViewModel
 import ca.mohawkcollege.petcupid.databinding.ActivityChatBinding
+import ca.mohawkcollege.petcupid.tools.ChatUtils
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
 
+    // Static variables for data transfer between activities
     companion object {
         var chatUid: String = ""
         var senderUid: String = ""
@@ -61,15 +63,22 @@ class ChatActivity : AppCompatActivity() {
         adapter.stopListening()
     }
 
+    /**
+     * Check if the data transfer from previous activity is successful
+     * @return true if the data transfer is successful, otherwise false
+     */
     private fun isInitDataTransfer(): Boolean {
         val chatTo = intent.getParcelableExtra<ChatListItem>("chatTo") ?: return false
         senderUid = currentUser.uid
         receiver = chatTo.name
         receiverUid = chatTo.receiverUid
-        chatUid = getChatUid(currentUser.uid, receiverUid)
+        chatUid = ChatUtils.getChatUid(currentUser.uid, receiverUid)
         return true
     }
 
+    /**
+     * Setup the recycler view for chat messages
+     */
     private fun setupRecyclerView() {
         val options = FirebaseRecyclerOptions.Builder<ChatMessage>()
             .setQuery(chatViewModel.query, ChatMessage::class.java)
@@ -82,16 +91,13 @@ class ChatActivity : AppCompatActivity() {
             }
 
             override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int, model: ChatMessage) {
-                holder.bind(model, currentUser.uid)
+                if (model.senderUid == currentUser.uid) holder.setIsSender(true) else holder.setIsSender(false)
+                holder.bind(model)
             }
         }
 
         binding.msgRecyclerView.adapter = adapter
         layoutManager = LinearLayoutManager(this)
         binding.msgRecyclerView.layoutManager = layoutManager
-    }
-
-    private fun getChatUid(thisUid: String, thatUid: String): String {
-        return if (thisUid > thatUid) thisUid + thatUid else thatUid + thisUid
     }
 }
