@@ -7,6 +7,7 @@ data class SearchContactItem(
     val phone: String,
     val email: String,
     val username: String,
+    val icon: String?
 ) : Serializable {
-    constructor() : this("", "", "", "")
+    constructor() : this("", "", "", "", "")
 }
