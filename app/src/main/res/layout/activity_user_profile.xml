@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="ca.mohawkcollege.petcupid.userprofile.UserProfileViewModel" />
+        <variable
+            name="viewModel"
+            type="UserProfileViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/userProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_with_dog_cat"
+        android:orientation="vertical"
+        tools:context=".UserProfileActivity">
+
+        <TextView
+            android:id="@+id/userProfileTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="45dp"
+            android:fontFamily="cursive"
+            android:text="User Profile"
+            android:textAlignment="center"
+            android:textColor="#343434"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userProfileTextView"
+            android:layout_alignStart="@id/userProfileTextView"
+            android:layout_alignEnd="@id/userProfileTextView"
+            android:layout_marginTop="20dp"
+            tools:src="@tools:sample/avatars" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userNameTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iconImageView"
+            android:layout_alignStart="@id/userProfileTextView"
+            android:layout_alignEnd="@id/userProfileTextView"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/orange"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userNameTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:text="@{viewModel.user.username}"
+                tools:text="@tools:sample/full_names" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/userNameTextInputLayout"
+            android:layout_alignStart="@id/userNameTextInputLayout"
+            android:layout_alignEnd="@id/userNameTextInputLayout"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/orange"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="text|textEmailAddress"
+                android:text="@{viewModel.user.email}"
+                tools:text="@tools:sample/lorem" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailTextInputLayout"
+            android:layout_alignStart="@id/emailTextInputLayout"
+            android:layout_alignEnd="@id/emailTextInputLayout"
+            android:layout_marginTop="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:boxStrokeColor="@color/orange"
+            app:endIconMode="clear_text"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:text="@{viewModel.user.phone}"
+                tools:text="@tools:sample/us_phones" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/phoneNumberTextInputLayout"
+            android:layout_alignEnd="@id/phoneNumberTextInputLayout"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#F59B46"
+            android:text="SAVE"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/exitButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="125dp"
+            android:layout_marginEnd="125dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="LOGOUT"
+            android:textColor="#E36363"
+            android:textStyle="bold"
+            app:icon="@drawable/exit"
+            app:iconTint="#E36363" />
+
+    </RelativeLayout>
+</layout>
