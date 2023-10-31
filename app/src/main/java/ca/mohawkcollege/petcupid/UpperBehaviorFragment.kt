@@ -2,6 +2,7 @@ package ca.mohawkcollege.petcupid
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -57,9 +58,8 @@ class UpperBehaviorFragment : Fragment() {
      */
     private fun initScreenOnClickHandler() {
         binding.profileImgBtn.setOnClickListener {
-            // This behavior just for testing
-            if (mAuth.currentUser != null) mAuth.signOut()
-//            initFirebaseAuth()
+            val intent = Intent(requireContext(), UserProfileActivity::class.java)
+            startActivity(intent)
         }
         binding.camImgBtn.setOnClickListener { captureScenes(true) }
         binding.camImgBtn.setOnLongClickListener { captureScenes(false); true }
