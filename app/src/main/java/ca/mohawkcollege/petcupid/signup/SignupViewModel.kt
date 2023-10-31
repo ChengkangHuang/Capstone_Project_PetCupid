@@ -17,26 +17,51 @@ class SignupViewModel : ViewModel() {
     private val _signupResult = MutableLiveData<SignupResult>()
     val signupResult: MutableLiveData<SignupResult> = _signupResult
 
+    /**
+     * Username text changed
+     * @param userName
+     */
     fun onUserNameTextChanged(userName: CharSequence) {
         this.userName.value = userName.toString()
     }
 
+    /**
+     * Phone number text changed
+     * @param phoneNumber
+     */
     fun onPhoneNumberTextChanged(phoneNumber: String) {
         this.phoneNumber.value = phoneNumber
     }
 
+    /**
+     * Email text changed
+     * @param email
+     */
     fun onEmailTextChanged(email: String) {
         this.email.value = email
     }
 
+    /**
+     * Password text changed
+     * @param password
+     */
     fun onPasswordTextChanged(password: String) {
         this.password.value = password
     }
 
+    /**
+     * Confirm password text changed
+     * @param confirmPassword
+     */
     fun onConfirmPasswordTextChanged(confirmPassword: String) {
         this.confirmPassword.value = confirmPassword
     }
 
+    /**
+     * Signup button click
+     * Get the device token from SignupRepository
+     * Call signup function from SignupRepository
+     */
     fun onSignupButtonClick() {
         val userName = userName.value!!
         val email = email.value!!
@@ -55,6 +80,11 @@ class SignupViewModel : ViewModel() {
     }
 }
 
+/**
+ * SignupResult sealed class
+ * Success: return user
+ * Error: return exception
+ */
 sealed class SignupResult {
     data class Success(val user: FirebaseUser?): SignupResult()
     data class Error(val exception: Exception): SignupResult()

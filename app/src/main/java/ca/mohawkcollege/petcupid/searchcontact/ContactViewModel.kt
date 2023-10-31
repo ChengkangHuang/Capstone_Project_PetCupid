@@ -12,6 +12,10 @@ class ContactViewModel : ViewModel() {
     val dataResult: LiveData<DataResult>
         get() = _dataResult
 
+    /**
+     * Get data by search email
+     * @param email
+     */
     fun getDataBySearchEmail(email: String) {
         contactRepository.searchEmail(email) { resultCollection, exception ->
             if (resultCollection != null) {
@@ -22,6 +26,10 @@ class ContactViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Get data by search phone number
+     * @param phoneNumber
+     */
     fun getDataBySearchPhoneNumber(phoneNumber: String) {
         contactRepository.searchPhoneNumber(phoneNumber) { resultCollection, exception ->
             if (resultCollection != null) {
@@ -36,6 +44,7 @@ class ContactViewModel : ViewModel() {
 /**
  * DataResult sealed class
  * Success: return data
+ * Error: return exception
  */
 sealed class DataResult {
     data class Success(val searchContactResult: MutableList<SearchContactItem>?): DataResult()
