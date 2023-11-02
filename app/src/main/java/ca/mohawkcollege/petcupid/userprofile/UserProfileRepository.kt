@@ -12,9 +12,23 @@ class UserProfileRepository {
 
     fun setProfileData() {}
 
-    fun getProfileData() {}
+    fun getProfileDataByUid(uid: String, callback: (User?, Exception?) -> Unit) {
+        query.whereEqualTo("uid", uid)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val data = document.toObject(User::class.java)
+                    callback(data, null)
+                }
+            }
+            .addOnFailureListener { exception ->
+                callback(null, exception)
+            }
+    }
 
-    fun updateProfileData() {}
+    fun updateProfileData(newData: User, callback: (User?, Exception?) -> Unit) {
+
+    }
 
     fun deleteProfileData() {}
 }

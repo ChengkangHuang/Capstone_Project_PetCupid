@@ -128,6 +128,7 @@
             android:layout_alignEnd="@id/phoneNumberTextInputLayout"
             android:layout_marginTop="20dp"
             android:backgroundTint="#F59B46"
+            android:enabled="@{viewModel.isDataChanged() ? true : false}"
             android:text="SAVE"
             android:textSize="20sp"
             android:textStyle="bold" />

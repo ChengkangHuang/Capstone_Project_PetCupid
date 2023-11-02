@@ -6,7 +6,7 @@ data class User(
     val uid: String,
     val phone: String,
     val email: String,
-    val username: String,
+    var username: String,
     val icon: String?
 ) : Serializable {
     constructor() : this("", "", "", "", "")
