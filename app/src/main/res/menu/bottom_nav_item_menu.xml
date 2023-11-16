@@ -11,7 +11,7 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/hotSpotMapFragment"
         android:icon="@drawable/_296652_animal_dog_inu_japan_japanese_icon"
-        android:title="Profile" />
+        android:title="Map" />
 </menu>

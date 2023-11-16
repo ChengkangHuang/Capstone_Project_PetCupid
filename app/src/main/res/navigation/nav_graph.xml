@@ -17,4 +17,10 @@
         android:label="fragment_search_contact"
         tools:layout="@layout/fragment_search_contact" />
 
+    <fragment
+        android:id="@+id/hotSpotMapFragment"
+        android:name="ca.mohawkcollege.petcupid.HotSpotMapsFragment"
+        android:label="fragment_hot_spot_maps"
+        tools:layout="@layout/fragment_hot_spot_maps" />
+
 </navigation>
