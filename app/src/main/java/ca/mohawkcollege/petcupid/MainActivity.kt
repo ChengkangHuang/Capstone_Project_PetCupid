@@ -3,16 +3,21 @@ package ca.mohawkcollege.petcupid
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import ca.mohawkcollege.petcupid.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         setupFragmentNavHandler()
     }
 
+    /**
+     * Initial Firebase authentication and setup user
+     */
     private fun initFirebaseAuth() {
         if (mAuth.currentUser == null) {
             Log.d(TAG, "initFirebaseAuth: No user login")
@@ -61,9 +69,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Setup fragment navigation handler
+     */
     private fun setupFragmentNavHandler() {
         val nav = binding.bottomNavigationView
         val navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
         NavigationUI.setupWithNavController(nav, navController)
+    }
+
+    /**
+     * Show the bottom navigation view
+     */
+    fun showNavBottomSheet() {
+        val showBottomSheetAnim = AnimationUtils.loadAnimation(this, R.anim.show_bottom_sheet_anim)
+        binding.bottomNavigationView.visibility = View.VISIBLE
+        binding.bottomNavigationView.animation = showBottomSheetAnim
+    }
+
+    /**
+     * Hide the bottom navigation view
+     */
+    fun hideNavBottomSheet() {
+        val hideBottomSheetAnim = AnimationUtils.loadAnimation(this, R.anim.hide_bottom_sheet_anim)
+        binding.bottomNavigationView.visibility = View.GONE
+        binding.bottomNavigationView.animation = hideBottomSheetAnim
     }
 }
