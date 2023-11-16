@@ -33,20 +33,21 @@ class SignupRepository {
      * Get the token of the current user.
      * @return The token of the current user.
      */
-    fun getToken(): String {
-        var token = ""
+    fun getToken(callback: (String?, Exception?) -> Unit) {
         FirebaseMessaging.getInstance().token
             .addOnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    callback(null, task.exception)
                 } else {
-                    token = task.result
+                    val token = task.result?.toString()
+                    callback(token, null)
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Fetching FCM registration token failed", exception)
+                callback(null, exception)
             }
-        return token
     }
 
     /**
@@ -63,7 +64,8 @@ class SignupRepository {
             "username" to userName,
             "phone" to phoneNumber,
             "email" to email,
-            "token" to token
+            "token" to token,
+            "icon" to ""
         )
         val db = Firebase.firestore
         db.collection("users")

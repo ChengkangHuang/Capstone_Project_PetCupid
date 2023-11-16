@@ -70,8 +70,19 @@ class SignupViewModel : ViewModel() {
         signupRepository.signup(email, password) { user, exception ->
             if (user != null) {
                 _signupResult.value = SignupResult.Success(user)
-                val token = signupRepository.getToken()
-                signupRepository.saveToDatabase(user.uid, userName, phoneNumber, email, token)
+                signupRepository.getToken { tokenResult, exception ->
+                    if (tokenResult != null) {
+                        signupRepository.saveToDatabase(
+                            user.uid,
+                            userName,
+                            phoneNumber,
+                            email,
+                            tokenResult
+                        )
+                    } else {
+                        Log.e(TAG, "onSignupButtonClick: failed to get token", exception!!)
+                    }
+                }
                 Log.d(TAG, "onSignupButtonClick: current user id -> ${user.uid}")
             } else {
                 _signupResult.value = SignupResult.Error(exception!!)
@@ -88,4 +99,14 @@ class SignupViewModel : ViewModel() {
 sealed class SignupResult {
     data class Success(val user: FirebaseUser?): SignupResult()
     data class Error(val exception: Exception): SignupResult()
+}
+
+/**
+ * TokenResult sealed class
+ * Success: return token
+ * Error: return exception
+ */
+sealed class TokenResult {
+    data class Success(val token: String): TokenResult()
+    data class Error(val exception: Exception): TokenResult()
 }
