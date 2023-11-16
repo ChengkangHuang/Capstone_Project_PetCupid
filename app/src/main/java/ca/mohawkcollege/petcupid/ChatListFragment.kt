@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ca.mohawkcollege.petcupid.chatlist.ChatListAdapter
@@ -50,6 +51,31 @@ class ChatListFragment : Fragment() {
                 startActivity(this)
             }
         }
+
+        binding.chatListView.setOnScrollListener(object : AbsListView.OnScrollListener {
+            // Hide bottom navigation bar when scrolling
+            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+                Log.d(TAG, "onScrollStateChanged: $scrollState")
+                when (scrollState) {
+                    AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL -> {
+                        (activity as MainActivity).hideNavBottomSheet()
+                    }
+                    AbsListView.OnScrollListener.SCROLL_STATE_FLING -> {
+                        (activity as MainActivity).hideNavBottomSheet()
+                    }
+                    AbsListView.OnScrollListener.SCROLL_STATE_IDLE -> {
+                        (activity as MainActivity).showNavBottomSheet()
+                    }
+                }
+            }
+
+            override fun onScroll(
+                view: AbsListView?,
+                firstVisibleItem: Int,
+                visibleItemCount: Int,
+                totalItemCount: Int
+            ) {}
+        })
 
         chatListViewModel.chatListItems.observe(viewLifecycleOwner) { chatListItem ->
             adapter?.clear()
