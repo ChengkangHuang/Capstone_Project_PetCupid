@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import ca.mohawkcollege.petcupid.chatmsg.Appointment
 import ca.mohawkcollege.petcupid.chatmsg.ChatMessage
 import ca.mohawkcollege.petcupid.chatmsg.ChatRepository
+import ca.mohawkcollege.petcupid.searchcontact.SearchContactItem
 import coil.load
 import coil.transform.RoundedCornersTransformation
 
@@ -55,6 +56,16 @@ class XmlAttrExtensions {
                     Log.d(TAG, "setOnAppointmentConfirm: $appointment")
                     val chatUid = ChatUtils.getChatUid(messageData.senderUid, messageData.receiverUid)
                     ChatRepository().updateAppointment(chatUid, messageData.messageId, appointment)
+                }
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("onAddNewFriend")
+        fun setOnAddNewFriend(button: Button, searchContactItem: SearchContactItem?) {
+            button.setOnClickListener {
+                if (searchContactItem != null) {
+                    Log.d(TAG, "setOnAddNewFriend: $searchContactItem")
                 }
             }
         }
