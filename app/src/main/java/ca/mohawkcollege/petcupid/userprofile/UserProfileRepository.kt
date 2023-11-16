@@ -23,6 +23,7 @@ class UserProfileRepository {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.toObject(User::class.java)
+                    Log.d(TAG, "getProfileDataByUid: $data")
                     callback(data, null)
                 }
             }

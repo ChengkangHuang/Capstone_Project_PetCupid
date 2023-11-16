@@ -7,7 +7,8 @@ data class User(
     var phone: String,
     var email: String,
     var username: String,
-    var icon: String?
+    var icon: String?,
+    var friends: Map<String, String>?,
 ) : Serializable {
-    constructor() : this("", "", "", "", "")
+    constructor() : this("", "", "", "", "", null)
 }
