@@ -141,7 +141,7 @@ class ChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
      * @param isMessageSender Whether the current user is the sender
      */
     private fun handleAudioPlayback(context: Context, chatMessage: ChatMessage, isMessageSender: Boolean) {
-        val audioView = if (isMessageSender) binding.voiceUser else binding.voiceOther
+        val audioView = if (isMessageSender) binding.voiceUserBtn else binding.voiceOtherBtn
         audioView.setOnClickListener {
             if (isAudioPlaying) {
                 audioUtils.stopPlaybackAudio()

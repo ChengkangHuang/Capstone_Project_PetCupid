@@ -103,13 +103,14 @@
                             tools:srcCompat="@tools:sample/avatars[3]" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/voice_user"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="6dp"
                             android:background="@mipmap/my_bubble_user_4">
 
                             <Button
-                                android:id="@+id/voice_user"
+                                android:id="@+id/voice_user_btn"
                                 style="@style/Widget.Material3.Button.IconButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -225,13 +226,14 @@
                             tools:srcCompat="@tools:sample/avatars[2]" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/voice_other"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="6dp"
                             android:background="@mipmap/my_bubble_system_4">
 
                             <Button
-                                android:id="@+id/voice_other"
+                                android:id="@+id/voice_other_btn"
                                 style="@style/Widget.Material3.Button.IconButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
