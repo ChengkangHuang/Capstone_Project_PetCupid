@@ -14,6 +14,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
 import java.io.File
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class ChatRepository {
 
@@ -109,6 +112,33 @@ class ChatRepository {
             }
         }.addOnFailureListener {
             Log.e(TAG, "====uploadMedia:failure====")
+        }
+    }
+
+    /**
+     * Uploads a voice record to Firebase Storage.
+     * @param file The voice record file.
+     * @param fileName The name of the voice record file.
+     * @return The download URL of the voice record file.
+     */
+    suspend fun uploadVoiceRecord(file: File, fileName: String): String {
+        return suspendCoroutine { continuation ->
+            val fileUri = Uri.fromFile(file)
+            val audioRef = storageRef.child("audio").child(fileName)
+            val uploadTask = audioRef.putFile(fileUri)
+            uploadTask.addOnSuccessListener {
+                Log.d(TAG, "uploadVoiceRecord: start uploading")
+                audioRef.downloadUrl.addOnSuccessListener { uri ->
+                    continuation.resume(uri.toString())
+                    Log.d(TAG, "getDownloadUri: success")
+                }.addOnFailureListener {
+                    continuation.resumeWithException(it)
+                    Log.e(TAG, "getDownloadUri: failure")
+                }
+            }.addOnFailureListener {
+                continuation.resumeWithException(it)
+                Log.e(TAG, "uploadVoiceRecord: failure")
+            }
         }
     }
 

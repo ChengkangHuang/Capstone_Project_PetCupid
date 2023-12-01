@@ -23,6 +23,14 @@
             type="String" />
 
         <variable
+            name="audioDuration"
+            type="String" />
+
+        <variable
+            name="audioMessage"
+            type="String" />
+
+        <variable
             name="appointmentMessage"
             type="ca.mohawkcollege.petcupid.chatmsg.Appointment" />
     </data>
@@ -91,7 +99,34 @@
                             android:paddingTop="20dp"
                             android:paddingEnd="20dp"
                             android:paddingBottom="10dp"
-                            app:imageLoader="@{imgMessage}" />
+                            app:imageLoader="@{imgMessage}"
+                            tools:srcCompat="@tools:sample/avatars[3]" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="6dp"
+                            android:background="@mipmap/my_bubble_user_4">
+
+                            <Button
+                                android:id="@+id/voice_user"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|center_horizontal|center_vertical"
+                                android:text="@{audioDuration}"
+                                android:textColor="@color/orange"
+                                android:textSize="18sp"
+                                app:icon="@drawable/voice"
+                                app:iconGravity="textEnd"
+                                app:iconPadding="5dp"
+                                app:iconTint="@color/orange"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <LinearLayout
                             android:id="@+id/date_user"
@@ -120,15 +155,6 @@
                                 android:textColor="@color/apo_time_text"
                                 android:textSize="24sp"
                                 tools:text="@tools:sample/date/mmddyy" />
-
-                            <Button
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@{appointmentMessage.appointmentConfirmation == 0 &amp;&amp; isMsgSender ? @color/apo_time_selected : @color/apo_time_text}"
-                                android:enabled="@{appointmentMessage.appointmentConfirmation == 0 &amp;&amp; isMsgSender ? false : true}"
-                                android:gravity="center"
-                                android:text="Confirm"
-                                app:onAppointmentConfirm="@{messageData}" />
 
                         </LinearLayout>
 
@@ -195,7 +221,34 @@
                             android:paddingTop="20dp"
                             android:paddingEnd="15dp"
                             android:paddingBottom="10dp"
-                            app:imageLoader="@{imgMessage}" />
+                            app:imageLoader="@{imgMessage}"
+                            tools:srcCompat="@tools:sample/avatars[2]" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:background="@mipmap/my_bubble_system_4">
+
+                            <Button
+                                android:id="@+id/voice_other"
+                                style="@style/Widget.Material3.Button.IconButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|center_horizontal|center_vertical"
+                                android:text="@{audioDuration}"
+                                android:textColor="@color/orange"
+                                android:textSize="18sp"
+                                app:icon="@drawable/voice"
+                                app:iconGravity="textStart"
+                                app:iconPadding="5dp"
+                                app:iconTint="@color/orange"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <LinearLayout
                             android:id="@+id/date_other"
@@ -226,13 +279,13 @@
                                 tools:text="@tools:sample/date/mmddyy" />
 
                             <Button
+                                android:id="@+id/confirmBtn_other"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@{appointmentMessage.appointmentConfirmation != 1 || isMsgSender ? @color/apo_time_text : @color/apo_time_selected}"
                                 android:enabled="@{appointmentMessage.appointmentConfirmation != 1 || isMsgSender ? true : false}"
                                 android:gravity="center"
-                                android:text="Confirm"
-                                app:onAppointmentConfirm="@{messageData}" />
+                                android:text="Confirm" />
 
                         </LinearLayout>
 

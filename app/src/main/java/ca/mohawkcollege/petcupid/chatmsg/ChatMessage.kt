@@ -15,11 +15,13 @@ import java.io.Serializable
 data class ChatMessage(
     val messageId: String,
     val senderUid: String,
+    val sender: String,
     val receiverUid: String,
+    val receiver: String,
     val message: Message,
     val timestamp: Long
 ) : Serializable {
-    constructor() : this("", "", "", Message(), 0)
+    constructor() : this("", "", "", "", "", Message(), 0)
 
     /**
      * Converts the timestamp to a string.

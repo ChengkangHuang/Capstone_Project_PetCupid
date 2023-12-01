@@ -46,6 +46,7 @@ class XmlAttrExtensions {
          * @param button The button to set the onClickListener for.
          * @param messageData The chat message data.
          */
+        @Deprecated("Use binding.calendarBtn.setOnClickListener instead")
         @JvmStatic
         @BindingAdapter("onAppointmentConfirm")
         fun setOnAppointmentConfirm(button: Button, messageData: ChatMessage?) {

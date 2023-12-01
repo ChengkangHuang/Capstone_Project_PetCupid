@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ca.mohawkcollege.petcupid.ChatActivity
 import com.google.firebase.database.Query
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
 import java.util.regex.Pattern
 
 /**
@@ -19,13 +23,14 @@ class ChatViewModel: ViewModel() {
     private val TAG = "====ChatViewModel===="
     private val chatUid: String = ChatActivity.chatUid
     private val senderUid: String = ChatActivity.senderUid
+    private val sender: String = ChatActivity.sender
     private val receiverUid: String = ChatActivity.receiverUid
+    private val receiver: String = ChatActivity.receiver
     private val chatRepository = ChatRepository()
 
     // The database query for the chat messages.
     val query : Query
         get() = chatRepository.getDBQuery(chatUid)
-
 
     // The chat messages from the database.
     val chatMessageLiveData : LiveData<List<ChatMessage>>
@@ -41,7 +46,9 @@ class ChatViewModel: ViewModel() {
         val chatMessage = ChatMessage(
             uniqueMessageId,
             senderUid,
+            sender,
             receiverUid,
+            receiver,
             message,
             currentTimestamp
         )
@@ -72,6 +79,18 @@ class ChatViewModel: ViewModel() {
         }
     }
 
+    fun uploadAudio(cacheFile: File) {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val downloadUri = chatRepository.uploadVoiceRecord(cacheFile, cacheFile.name)
+                Log.d(TAG, "uploadAudio: $downloadUri")
+                sendMsg(Message(MessageType.AUDIO, downloadUri))
+            } catch (e: Exception) {
+                Log.e(TAG, "uploadAudio: ${e.message}")
+            }
+        }
+    }
+
     /**
      * Sets an appointment.
      * @param year The year of the appointment.
@@ -93,7 +112,7 @@ class ChatViewModel: ViewModel() {
         val mediaRegex = Regex("^https://firebasestorage.googleapis.com/.*\\.(jpg|jpeg|png|gif|mp4|mp3)")
         val imagePattern = Pattern.compile("\\.(jpg|jpeg|png|gif)", Pattern.CASE_INSENSITIVE)
         val videoPattern = Pattern.compile("\\.(mp4|avi|mkv|mov|wmv|flv)", Pattern.CASE_INSENSITIVE)
-        val audioPattern = Pattern.compile("\\.(mp3|wav|ogg|flac)", Pattern.CASE_INSENSITIVE)
+        val audioPattern = Pattern.compile("\\.(mp3|wav|ogg|flac|3gp)", Pattern.CASE_INSENSITIVE)
 
         return if (mediaRegex.containsMatchIn(message)) {
             when {
